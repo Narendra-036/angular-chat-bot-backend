@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -78,6 +79,15 @@ WSGI_APPLICATION = 'chatbot_backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+
+AUTH_USER_MODEL = 'chatbot.User'
+
+# settings.py
+AUTHENTICATION_BACKENDS = [
+    'chatbot.backends.CustomAuthBackend',  # The custom backend you created
+]
+
+
 
 
 DATABASES = {
