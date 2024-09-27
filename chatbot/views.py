@@ -48,13 +48,23 @@ def register(request):
             email = data.get('email')
             password = data.get('password')
             username = fullname.replace(' ', '_').lower()
+            
+            optional_fields = {key: data[key] for key in data if key not in ['full_name', 'email', 'password']}
+            quick_signup = optional_fields.get('quick_signup', False)
+            provider_platform = optional_fields.get('provider_platform', None)
+            
+            if quick_signup:
+                if User.objects.filter(email=email).exists():
+                    return JsonResponse({'messege': 'User registered successfully!'}, status=201)
+
+
             if not username or not email or not password:
                 return JsonResponse({'error': 'All fields are required'}, status=400)
             
             if User.objects.filter(email=email).exists():
                 return JsonResponse({'error': 'Email already exists'}, status=400)
                         
-            user = User.objects.create(username=username, email=email, password=password, fullname=fullname)
+            user = User.objects.create(username=username, email=email, password=password, fullname=fullname, quick_signup=quick_signup, provider_platform=provider_platform)
             user.save()
             return JsonResponse({'message': 'User registered successfully!'}, status=201)
         except Exception as e:

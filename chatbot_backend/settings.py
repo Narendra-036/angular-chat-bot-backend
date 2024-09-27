@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
+SITE_ID = 1
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -41,6 +42,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'chatbot',
+    'allauth',
+    
 ]
 
 MIDDLEWARE = [
@@ -141,9 +144,9 @@ USE_TZ = True
 
 CORS_ALLOW_CREDENTIALS = True  
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:4200',  
+    'https://angular-chatbot.mr-narendra.live',  
 ]
-CSRF_TRUSTED_ORIGINS = ['http://localhost:4200'] 
+CSRF_TRUSTED_ORIGINS = ['https://angular-chatbot.mr-narendra.live'] 
 
 
 # Static files (CSS, JavaScript, Images)

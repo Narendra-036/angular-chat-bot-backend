@@ -14,7 +14,7 @@ class CustomUserManager(BaseUserManager):
             raise ValueError('The Email field must be set')
         email = self.normalize_email(email)
         user = self.model(email=email, username=username, **extra_fields)
-        user.set_password(password)  # This will hash the password
+        user.set_password(password)  
         user.save(using=self._db)
         return user
 
@@ -34,13 +34,17 @@ class User(AbstractBaseUser):
     fullname = models.CharField(max_length=100)
     username = models.CharField(max_length=100)
     email = models.EmailField(unique=True, primary_key=True)
+    
+    quick_signup = models.BooleanField(default=False)
+    provider_platform = models.CharField(max_length=100, blank=True, null=True)
+    
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
 
-    USERNAME_FIELD = 'email'  # Login with email
+    USERNAME_FIELD = 'email'  
     REQUIRED_FIELDS = ['username']
 
     objects = CustomUserManager()
